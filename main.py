@@ -12,6 +12,17 @@ class BowAndArrow(pygame.sprite.Sprite):
         img.fill(WHITE)
         self.image = img
 
+        self.last_update = pygame.time.get_ticks()
+
+        self.speed = 300
+
+    def update(self, delta_time):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            self.rect.x -= self.speed * delta_time
+        if keys[pygame.K_RIGHT]:
+            self.rect.x += self.speed * delta_time
+
 
 class Apple(pygame.sprite.Sprite):
     def __init__(self, group):
@@ -35,7 +46,8 @@ def main():
 
     # Initialize Player
     player = BowAndArrow(player_group)
-    player.rect = pygame.Rect((screen.get_rect().centerx, screen.get_rect().bottom - 128), (64, 64))
+    player.rect = pygame.Rect(
+        (screen.get_rect().centerx, screen.get_rect().bottom - 128), (64, 64))
 
     # Initialize Enemies
     # Game Loop

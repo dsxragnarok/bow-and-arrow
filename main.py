@@ -1,45 +1,7 @@
 import pygame
-
-ORIGIN = (0, 0)
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-
-
-class BowAndArrow(pygame.sprite.Sprite):
-    def __init__(self, group):
-        super().__init__(group)
-        img = pygame.surface.Surface((64, 64)).convert_alpha()
-        img.fill(WHITE)
-        self.image = img
-
-        self.last_update = pygame.time.get_ticks()
-
-        self.speed = 300
-
-    def update(self, delta_time):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            self.rect.x -= self.speed * delta_time
-        if keys[pygame.K_RIGHT]:
-            self.rect.x += self.speed * delta_time
-
-
-class Apple(pygame.sprite.Sprite):
-    def __init__(self, group):
-        super().__init__(group)
-        img = pygame.surface.Surface((64, 64)).convert_alpha()
-        img.fill(RED)
-        self.image = img
-
-        self.last_update = pygame.time.get_ticks()
-
-        self.speed = 300
-
-    def update(self, delta_time, screen):
-        self.rect.x = self.rect.x + self.speed * delta_time
-        if self.rect.x >= screen.get_rect().right + 128:
-            self.rect.x = screen.get_rect().left - 128
+from constants import BLACK
+from apple import Apple
+from player import BowAndArrow
 
 
 def main():

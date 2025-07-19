@@ -2,7 +2,7 @@ import pygame
 from constants import WHITE
 
 
-class BowAndArrow(pygame.sprite.Sprite):
+class Bow(pygame.sprite.Sprite):
     def __init__(self, group, pos):
         super().__init__(group)
         img = pygame.Surface((64, 64)).convert_alpha()

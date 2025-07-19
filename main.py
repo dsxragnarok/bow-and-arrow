@@ -1,7 +1,8 @@
 import pygame
-from constants import BLACK
+from constants import BLACK, SHOOT_COOLDOWN_MS
 from apple import Apple
-from player import BowAndArrow
+from player import Bow
+from arrow import Arrow
 
 
 def main():
@@ -18,10 +19,11 @@ def main():
     # SpriteGroups
     player_group = pygame.sprite.Group()
     enemy_group = pygame.sprite.Group()
+    projectile_group = pygame.sprite.Group()
 
     # Initialize Player
     player_position = (screen.get_rect().centerx, screen.get_rect().bottom - 128)
-    player = BowAndArrow(player_group, player_position)
+    player = Bow(player_group, player_position)
 
     # Initialize Enemies
     apple_spawn_position = (screen.get_rect().left - 128, 200)
@@ -29,21 +31,29 @@ def main():
 
     # Game Loop
     while running:
+        current_time = pygame.time.get_ticks()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
         delta_time = clock.tick(60) / 1000
+        shoot_delta_time = current_time - last_update
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE] and shoot_delta_time > SHOOT_COOLDOWN_MS:
+            arrow = Arrow(projectile_group, player.rect.center)
+            last_update = current_time
 
         # Updates
         player_group.update(delta_time)
         enemy_group.update(delta_time, screen)
+        projectile_group.update(delta_time, screen)
 
         # Draw
         # R , G, B
         screen.fill(BLACK)
         player_group.draw(screen)
         enemy_group.draw(screen)
+        projectile_group.draw(screen)
 
         pygame.display.flip()
 

@@ -1,4 +1,8 @@
+# Colors
 ORIGIN = (0, 0)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
+GREY = (175, 175, 175)
+
+SHOOT_COOLDOWN_MS = 500

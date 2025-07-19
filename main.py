@@ -1,6 +1,11 @@
 from random import randint
 import pygame
-from constants import BLACK, SHOOT_COOLDOWN_MS, MAX_NUM_FOES, FOES_SPAWN_COOLDOWN_MS
+from constants import (
+    BLACK,
+    SHOOT_COOLDOWN_MS,
+    MAX_NUM_FOES,
+    FOES_SPAWN_COOLDOWN_MS
+)
 from apple import Apple
 from player import Bow
 from arrow import Arrow
@@ -46,7 +51,8 @@ def main():
             last_shoot_update = current_time
 
         spawn_delta_time = current_time - last_spawn_update
-        if len(enemy_group) < MAX_NUM_FOES and spawn_delta_time > FOES_SPAWN_COOLDOWN_MS:
+        if (len(enemy_group) < MAX_NUM_FOES and
+            spawn_delta_time > FOES_SPAWN_COOLDOWN_MS):
             _apple = Apple(enemy_group, (screen.get_rect().left - 128, randint(0, 400)))
             last_spawn_update = current_time
 

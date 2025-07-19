@@ -2,6 +2,7 @@ from random import randint
 import pygame
 from constants import (
     BLACK,
+    YELLOW,
     SHOOT_COOLDOWN_MS,
     MAX_NUM_FOES,
     FOES_SPAWN_COOLDOWN_MS
@@ -15,12 +16,15 @@ def main():
     pygame.init()
 
     screen = pygame.display.set_mode((1280, 720))
+    font = pygame.font.SysFont(None, 48)
     clock = pygame.time.Clock()
     last_shoot_update = pygame.time.get_ticks()
     last_spawn_update = pygame.time.get_ticks()
 
     running = True
     delta_time = 0
+
+    score = 0
 
     # Textures
     # SpriteGroups
@@ -29,7 +33,9 @@ def main():
     projectile_group = pygame.sprite.Group()
 
     # Initialize Player
-    player_position = (screen.get_rect().centerx, screen.get_rect().bottom - 128)
+    player_position = (
+        screen.get_rect().centerx, screen.get_rect().bottom - 128
+    )
     player = Bow(player_group, player_position)
 
     # Initialize Enemies
@@ -60,10 +66,11 @@ def main():
         enemy_group.update(delta_time, screen)
         projectile_group.update(delta_time, screen)
 
-        collisions = pygame.sprite.groupcollide(projectile_group, enemy_group, True, False)
+        collisions = pygame.sprite.groupcollide(
+            projectile_group, enemy_group, True, False)
         for _, apples in collisions.items():
             for apple in apples:
-                apple.take_damage()
+                score += apple.take_damage()
 
         # Draw
         # R , G, B
@@ -72,6 +79,10 @@ def main():
         enemy_group.draw(screen)
         projectile_group.draw(screen)
 
+        score_text = font.render(f"Score: {score}", True, YELLOW)
+        score_rect = score_text.get_rect(
+            bottomleft=(64, screen.get_height() - 32))
+        screen.blit(score_text, score_rect)
         pygame.display.flip()
 
     pygame.quit()

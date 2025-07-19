@@ -53,7 +53,9 @@ class Apple(pygame.sprite.Sprite):
 
         if self.health <= 0:
             self.kill()
+            return 1
         else:
             self.flashing = True
             self.hurt_start_tm = pygame.time.get_ticks()
             self.last_flash_tm = self.hurt_start_tm
+            return 0

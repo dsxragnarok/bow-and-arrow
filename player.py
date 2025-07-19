@@ -5,7 +5,7 @@ from constants import WHITE
 class Bow(pygame.sprite.Sprite):
     def __init__(self, group, pos):
         super().__init__(group)
-        img = pygame.Surface((64, 64)).convert_alpha()
+        img = pygame.Surface((128, 64)).convert_alpha()
         img.fill(WHITE)
         self.image = img
 

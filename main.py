@@ -43,10 +43,11 @@ def main():
             arrow = Arrow(projectile_group, player.rect.center)
             last_update = current_time
 
-        # Updates
         player_group.update(delta_time)
         enemy_group.update(delta_time, screen)
         projectile_group.update(delta_time, screen)
+
+        collisions = pygame.sprite.groupcollide(projectile_group, enemy_group, True, True)
 
         # Draw
         # R , G, B

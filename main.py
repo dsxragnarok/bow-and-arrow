@@ -20,15 +20,12 @@ def main():
     enemy_group = pygame.sprite.Group()
 
     # Initialize Player
-    player = BowAndArrow(player_group)
-    player.rect = pygame.Rect(
-        (screen.get_rect().centerx, screen.get_rect().bottom - 128), (64, 64))
+    player_position = (screen.get_rect().centerx, screen.get_rect().bottom - 128)
+    player = BowAndArrow(player_group, player_position)
 
     # Initialize Enemies
-    apple = Apple(enemy_group)
-    apple.rect = pygame.Rect(
-        (screen.get_rect().left - 128, 200), (64, 64)
-    )
+    apple_spawn_position = (screen.get_rect().left - 128, 200)
+    apple = Apple(enemy_group, apple_spawn_position)
 
     # Game Loop
     while running:

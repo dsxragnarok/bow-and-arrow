@@ -60,7 +60,12 @@ def main():
         enemy_group.update(delta_time, screen)
         projectile_group.update(delta_time, screen)
 
-        collisions = pygame.sprite.groupcollide(projectile_group, enemy_group, True, True)
+        collisions = pygame.sprite.groupcollide(projectile_group, enemy_group, True, False)
+        for _, apples in collisions.items():
+            for apple in apples:
+                apple.health -= 1
+                if apple.health <= 0:
+                    apple.kill()
 
         # Draw
         # R , G, B

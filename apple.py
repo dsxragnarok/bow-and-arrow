@@ -13,7 +13,8 @@ class Apple(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
         self.last_update = pygame.time.get_ticks()
 
-        self.speed = 300
+        self.speed = 300 + randint(0, 6) * 100
+        self.health = 3
 
     def update(self, *args, **kwargs):
         delta_time = args[0] if args else 0

@@ -1,4 +1,5 @@
 import pygame
+from random import randint
 from constants import RED
 
 
@@ -21,3 +22,4 @@ class Apple(pygame.sprite.Sprite):
         self.rect.x = self.rect.x + self.speed * delta_time
         if self.rect.x >= screen.get_rect().right + 128:
             self.rect.x = screen.get_rect().left - 128
+            self.rect.y = randint(0, 400)

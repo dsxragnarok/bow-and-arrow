@@ -34,7 +34,7 @@ def main():
 
     # Initialize Enemies
     apple_spawn_position = (screen.get_rect().left - 128, 200)
-    apple = Apple(enemy_group, apple_spawn_position)
+    Apple(enemy_group, apple_spawn_position)
 
     # Game Loop
     while running:
@@ -47,13 +47,13 @@ def main():
         shoot_delta_time = current_time - last_shoot_update
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] and shoot_delta_time > SHOOT_COOLDOWN_MS:
-            arrow = Arrow(projectile_group, player.rect.center)
+            Arrow(projectile_group, player.rect.center)
             last_shoot_update = current_time
 
         spawn_delta_time = current_time - last_spawn_update
         if (len(enemy_group) < MAX_NUM_FOES and
-            spawn_delta_time > FOES_SPAWN_COOLDOWN_MS):
-            _apple = Apple(enemy_group, (screen.get_rect().left - 128, randint(0, 400)))
+                spawn_delta_time > FOES_SPAWN_COOLDOWN_MS):
+            Apple(enemy_group, (screen.get_rect().left - 128, randint(0, 400)))
             last_spawn_update = current_time
 
         player_group.update(delta_time)
@@ -63,9 +63,7 @@ def main():
         collisions = pygame.sprite.groupcollide(projectile_group, enemy_group, True, False)
         for _, apples in collisions.items():
             for apple in apples:
-                apple.health -= 1
-                if apple.health <= 0:
-                    apple.kill()
+                apple.take_damage()
 
         # Draw
         # R , G, B

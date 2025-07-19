@@ -1,5 +1,6 @@
+from random import randint
 import pygame
-from constants import BLACK, SHOOT_COOLDOWN_MS
+from constants import BLACK, SHOOT_COOLDOWN_MS, MAX_NUM_FOES, FOES_SPAWN_COOLDOWN_MS
 from apple import Apple
 from player import Bow
 from arrow import Arrow
@@ -10,7 +11,8 @@ def main():
 
     screen = pygame.display.set_mode((1280, 720))
     clock = pygame.time.Clock()
-    last_update = pygame.time.get_ticks()
+    last_shoot_update = pygame.time.get_ticks()
+    last_spawn_update = pygame.time.get_ticks()
 
     running = True
     delta_time = 0
@@ -37,11 +39,16 @@ def main():
                 running = False
 
         delta_time = clock.tick(60) / 1000
-        shoot_delta_time = current_time - last_update
+        shoot_delta_time = current_time - last_shoot_update
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] and shoot_delta_time > SHOOT_COOLDOWN_MS:
             arrow = Arrow(projectile_group, player.rect.center)
-            last_update = current_time
+            last_shoot_update = current_time
+
+        spawn_delta_time = current_time - last_spawn_update
+        if len(enemy_group) < MAX_NUM_FOES and spawn_delta_time > FOES_SPAWN_COOLDOWN_MS:
+            _apple = Apple(enemy_group, (screen.get_rect().left - 128, randint(0, 400)))
+            last_spawn_update = current_time
 
         player_group.update(delta_time)
         enemy_group.update(delta_time, screen)

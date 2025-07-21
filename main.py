@@ -3,6 +3,7 @@ import pygame
 from constants import (
     BLACK,
     YELLOW,
+    GREY,
     SHOOT_COOLDOWN_MS,
     MAX_NUM_FOES,
     FOES_SPAWN_COOLDOWN_MS
@@ -79,6 +80,10 @@ def main():
         enemy_group.draw(screen)
         projectile_group.draw(screen)
 
+        pygame.draw.line(screen, GREY, (0, 0),
+                         screen.get_rect().topright, 32)
+        pygame.draw.line(screen, GREY, (0, 464),
+                         (screen.get_rect().right, 464), 16)
         score_text = font.render(f"Score: {score}", True, YELLOW)
         score_rect = score_text.get_rect(
             bottomleft=(64, screen.get_height() - 32))

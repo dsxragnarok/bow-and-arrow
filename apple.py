@@ -1,7 +1,7 @@
 import pygame
 from random import randint
-from constants import RED, WHITE
-
+from constants import WHITE
+from utils import create_flash_image, red_flash_image
 HURT_ANIM_TIME_MS = 1000
 HURT_FLASH_INTERVAL_MS = 100
 
@@ -9,11 +9,14 @@ HURT_FLASH_INTERVAL_MS = 100
 class Apple(pygame.sprite.Sprite):
     def __init__(self, group, pos):
         super().__init__(group)
-        self.normal_img = pygame.Surface((64, 64)).convert_alpha()
-        self.normal_img.fill(RED)
+        texture = (
+            pygame.image.load("assets/apple.png", "apple").convert_alpha()
+        )
+        texture = pygame.transform.scale(texture, (64, 64)).convert_alpha()
+        self.normal_img = texture
 
-        self.flash_img = pygame.Surface((64, 64)).convert_alpha()
-        self.flash_img.fill(WHITE)
+        self.flash_img = red_flash_image(texture)
+        # self.flash_img = create_flash_image(texture)
 
         self.image = self.normal_img
 

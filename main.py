@@ -2,6 +2,7 @@ from random import randint
 import pygame
 from constants import (
     BLACK,
+    SKY_BLUE,
     YELLOW,
     GREY,
     SHOOT_COOLDOWN_MS,
@@ -35,7 +36,7 @@ def main():
 
     # Initialize Player
     player_position = (
-        screen.get_rect().centerx, screen.get_rect().bottom - 128
+        screen.get_rect().centerx, screen.get_rect().bottom - 256
     )
     player = Bow(player_group, player_position)
 
@@ -75,7 +76,7 @@ def main():
 
         # Draw
         # R , G, B
-        screen.fill(BLACK)
+        screen.fill(SKY_BLUE)
         player_group.draw(screen)
         enemy_group.draw(screen)
         projectile_group.draw(screen)

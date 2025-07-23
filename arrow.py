@@ -1,12 +1,16 @@
 import pygame
-from constants import GREY
+from constants import BLACK
 
 
 class Arrow(pygame.sprite.Sprite):
     def __init__(self, group, pos):
         super().__init__(group)
-        img = pygame.Surface((16, 64)).convert_alpha()
-        img.fill(GREY)
+        texture = pygame.image.load("assets/Arrows.png").convert_alpha()
+        img = pygame.Surface((32, 32)).convert_alpha()
+        img.blit(texture, (0, 0), pygame.Rect(0, 0, 32, 32))
+        img = pygame.transform.rotate(img, -45).convert_alpha()
+        img = pygame.transform.scale(img, (128, 256))
+        img.set_colorkey(BLACK)
         self.image = img
 
         self.rect = self.image.get_rect(topleft=pos)

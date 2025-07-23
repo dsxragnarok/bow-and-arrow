@@ -55,7 +55,7 @@ def main():
         shoot_delta_time = current_time - last_shoot_update
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] and shoot_delta_time > SHOOT_COOLDOWN_MS:
-            Arrow(projectile_group, (player.rect.left + 64, player.rect.top + 128))
+            Arrow(projectile_group, (player.rect.centerx - 32, player.rect.top))
             last_shoot_update = current_time
 
         spawn_delta_time = current_time - last_spawn_update

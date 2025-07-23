@@ -77,14 +77,15 @@ def main():
         # Draw
         # R , G, B
         screen.fill(SKY_BLUE)
-        player_group.draw(screen)
-        enemy_group.draw(screen)
-        projectile_group.draw(screen)
-
         pygame.draw.line(screen, GREY, (0, 0),
                          screen.get_rect().topright, 32)
         pygame.draw.line(screen, GREY, (0, 464),
                          (screen.get_rect().right, 464), 16)
+
+        player_group.draw(screen)
+        enemy_group.draw(screen)
+        projectile_group.draw(screen)
+
         score_text = font.render(f"Score: {score}", True, YELLOW)
         score_rect = score_text.get_rect(
             bottomleft=(64, screen.get_height() - 32))

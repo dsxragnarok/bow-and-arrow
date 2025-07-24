@@ -7,7 +7,7 @@ HURT_FLASH_INTERVAL_MS = 100
 
 
 class Apple(pygame.sprite.Sprite):
-    def __init__(self, group, pos, normal_img, flash_img, health=3, speed=300):
+    def __init__(self, group, pos, normal_img, flash_img, health=3, speed=900, bonus=1):
         super().__init__(group)
 
         self.normal_img = normal_img
@@ -17,8 +17,9 @@ class Apple(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
         self.last_update = pygame.time.get_ticks()
 
-        self.speed = speed + randint(0, 6) * 100
+        self.speed = speed
         self.health = health
+        self.bonus = bonus
 
         # Hurt animation control
         self.hurt_start_tm = 0
@@ -50,7 +51,7 @@ class Apple(pygame.sprite.Sprite):
 
         if self.health <= 0:
             self.kill()
-            return 1
+            return self.bonus
         else:
             self.flashing = True
             self.hurt_start_tm = pygame.time.get_ticks()

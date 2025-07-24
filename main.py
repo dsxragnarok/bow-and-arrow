@@ -35,8 +35,14 @@ def main():
     arrow_texture = pygame.image.load("assets/arrow.png").convert_alpha()
     arrow_texture = pygame.transform.scale(arrow_texture, (64, 128))
     apple_texture = pygame.image.load("assets/apple.png").convert_alpha()
-    apple_texture = pygame.transform.scale(apple_texture, (64, 64)).convert_alpha()
-    apple_flash_texture = red_flash_image(apple_texture)
+    apple_textures = [
+        pygame.transform.scale(apple_texture, (64, 64)).convert_alpha(),
+        pygame.transform.scale(apple_texture, (128, 128)).convert_alpha(),
+    ]
+    apple_flash_textures = [
+        red_flash_image(apple_textures[0]),
+        red_flash_image(apple_textures[1]),
+    ]
     # SpriteGroups
     player_group = pygame.sprite.Group()
     enemy_group = pygame.sprite.Group()
@@ -50,7 +56,7 @@ def main():
 
     # Initialize Enemies
     apple_spawn_position = (screen.get_rect().left - 128, 200)
-    Apple(enemy_group, apple_spawn_position, apple_texture, apple_flash_texture)
+    Apple(enemy_group, apple_spawn_position, apple_textures[0], apple_flash_textures[0])
 
     # Game Loop
     while running:
@@ -69,7 +75,11 @@ def main():
         spawn_delta_time = current_time - last_spawn_update
         if (len(enemy_group) < MAX_NUM_FOES and
                 spawn_delta_time > FOES_SPAWN_COOLDOWN_MS):
-            Apple(enemy_group, (screen.get_rect().left - 128, randint(0, 400)), apple_texture, apple_flash_texture)
+            idx = randint(0, 1)
+            hp = 6 if idx == 1 else 3
+            speed = 700 if idx == 1 else 900
+            bonus = 3 if idx == 1 else 1
+            Apple(enemy_group, (screen.get_rect().left - 128, randint(0, 400)), apple_textures[idx], apple_flash_textures[idx], hp, speed, bonus)
             last_spawn_update = current_time
 
         player_group.update(delta_time)

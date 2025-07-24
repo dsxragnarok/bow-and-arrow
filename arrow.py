@@ -3,11 +3,9 @@ from constants import BLACK
 
 
 class Arrow(pygame.sprite.Sprite):
-    def __init__(self, group, pos):
+    def __init__(self, group, pos, texture):
         super().__init__(group)
-        texture = pygame.image.load("assets/arrow.png").convert_alpha()
-        img = pygame.transform.scale(texture, (64, 128))
-        self.image = img
+        self.image = texture
 
         self.rect = self.image.get_rect(topleft=pos)
         self.last_update = pygame.time.get_ticks()

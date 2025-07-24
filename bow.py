@@ -1,14 +1,11 @@
 import pygame
-from constants import WHITE
 
 
 class Bow(pygame.sprite.Sprite):
-    def __init__(self, group, pos):
+    def __init__(self, group, pos, texture):
         super().__init__(group)
 
-        bow_texture = pygame.image.load("assets/bow.png").convert_alpha()
-        bow_texture = pygame.transform.scale(bow_texture, (128, 128)).convert_alpha()
-        self.image = bow_texture
+        self.image = texture
 
         self.rect = self.image.get_rect(topleft=pos)
         self.last_update = pygame.time.get_ticks()

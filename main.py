@@ -1,7 +1,6 @@
 from random import randint
 import pygame
 from constants import (
-    BLACK,
     SKY_BLUE,
     DARK_CYAN,
     YELLOW,
@@ -77,7 +76,7 @@ def main():
                 spawn_delta_time > FOES_SPAWN_COOLDOWN_MS):
             idx = randint(0, 1)
             hp = 6 if idx == 1 else 3
-            speed = 700 if idx == 1 else 900
+            speed = 600 if idx == 1 else 900
             bonus = 3 if idx == 1 else 1
             Apple(enemy_group, (screen.get_rect().left - 128, randint(0, 400)), apple_textures[idx], apple_flash_textures[idx], hp, speed, bonus)
             last_spawn_update = current_time

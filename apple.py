@@ -1,15 +1,24 @@
 import pygame
 from random import randint
-from constants import WHITE
-from utils import create_flash_image, red_flash_image
 HURT_ANIM_TIME_MS = 1000
 HURT_FLASH_INTERVAL_MS = 100
 
 
 class Apple(pygame.sprite.Sprite):
-    def __init__(self, group, pos, normal_img, flash_img, health=3, speed=900, bonus=1):
+    def __init__(
+        self,
+        group,
+        pos,
+        normal_img,
+        flash_img,
+        health=3,
+        speed=900,
+        bonus=1
+    ):
         super().__init__(group)
 
+        # save base img for transformations
+        self.original_img = normal_img
         self.normal_img = normal_img
         self.flash_img = flash_img
         self.image = self.normal_img
@@ -25,6 +34,9 @@ class Apple(pygame.sprite.Sprite):
         self.hurt_start_tm = 0
         self.last_flash_tm = 0
         self.flashing = False
+
+        # Rotation
+        self.angle = 0
 
     def update(self, *args, **kwargs):
         delta_time = args[0] if args else 0
@@ -45,6 +57,11 @@ class Apple(pygame.sprite.Sprite):
         if self.rect.x >= screen.get_rect().right + 128:
             self.rect.x = screen.get_rect().left - 128
             self.rect.y = randint(0, 400)
+
+        # Rotation
+        self.angle += -180 * delta_time
+        self.image = pygame.transform.rotate(self.original_img, self.angle)
+        self.rect = self.image.get_rect(center=self.rect.center)
 
     def take_damage(self):
         self.health -= 1

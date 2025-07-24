@@ -3,6 +3,7 @@ import pygame
 from constants import (
     BLACK,
     SKY_BLUE,
+    DARK_CYAN,
     YELLOW,
     GREY,
     SHOOT_COOLDOWN_MS,
@@ -77,10 +78,8 @@ def main():
         # Draw
         # R , G, B
         screen.fill(SKY_BLUE)
-        pygame.draw.line(screen, GREY, (0, 0),
-                         screen.get_rect().topright, 32)
-        pygame.draw.line(screen, GREY, (0, 464),
-                         (screen.get_rect().right, 464), 16)
+        pygame.draw.line(screen, DARK_CYAN, (0, 0),
+                         screen.get_rect().topright, 960)
 
         player_group.draw(screen)
         enemy_group.draw(screen)

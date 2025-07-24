@@ -9,14 +9,11 @@ HURT_FLASH_INTERVAL_MS = 100
 class Apple(pygame.sprite.Sprite):
     def __init__(self, group, pos):
         super().__init__(group)
-        texture = (
-            pygame.image.load("assets/apple.png", "apple").convert_alpha()
-        )
+        texture = pygame.image.load("assets/apple.png").convert_alpha()
         texture = pygame.transform.scale(texture, (64, 64)).convert_alpha()
         self.normal_img = texture
 
         self.flash_img = red_flash_image(texture)
-        # self.flash_img = create_flash_image(texture)
 
         self.image = self.normal_img
 

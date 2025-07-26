@@ -49,10 +49,6 @@ def main():
         pygame.transform.scale(apple_texture, (64, 64)).convert_alpha(),
         pygame.transform.scale(apple_texture, (128, 128)).convert_alpha(),
     ]
-    apple_flash_textures = [
-        red_flash_image(apple_textures[0]),
-        red_flash_image(apple_textures[1]),
-    ]
     # SpriteGroups
     player_group = pygame.sprite.Group()
     enemy_group = pygame.sprite.Group()
@@ -66,7 +62,7 @@ def main():
 
     # Initialize Enemies
     apple_spawn_position = (screen.get_rect().left - 128, 200)
-    Apple(enemy_group, apple_spawn_position, apple_textures[0], apple_flash_textures[0])
+    Apple(enemy_group, apple_spawn_position, apple_textures[0])
 
     # Game Loop
     while running:
@@ -89,7 +85,7 @@ def main():
             hp = 6 if idx == 1 else 3
             speed = 600 if idx == 1 else 900
             bonus = 3 if idx == 1 else 1
-            Apple(enemy_group, (screen.get_rect().left - 128, randint(0, 400)), apple_textures[idx], apple_flash_textures[idx], hp, speed, bonus)
+            Apple(enemy_group, (screen.get_rect().left - 128, randint(0, 400)), apple_textures[idx], hp, speed, bonus)
             last_spawn_update = current_time
 
         player_group.update(delta_time)

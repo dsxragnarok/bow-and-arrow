@@ -10,7 +10,6 @@ class Apple(pygame.sprite.Sprite):
         group,
         pos,
         normal_img,
-        flash_img,
         health=3,
         speed=900,
         bonus=1
@@ -20,7 +19,6 @@ class Apple(pygame.sprite.Sprite):
         # save base img for transformations
         self.original_img = normal_img
         self.normal_img = normal_img
-        self.flash_img = flash_img
         self.image = self.normal_img
 
         self.rect = self.image.get_rect(topleft=pos)
@@ -46,8 +44,6 @@ class Apple(pygame.sprite.Sprite):
         if (self.flashing and current_time - self.hurt_start_tm
                 < HURT_ANIM_TIME_MS):
             if current_time - self.last_flash_tm >= HURT_FLASH_INTERVAL_MS:
-                self.image = self.flash_img if self.image == self.normal_img \
-                    else self.normal_img
                 self.last_flash_tm = current_time
         else:
             self.image = self.normal_img

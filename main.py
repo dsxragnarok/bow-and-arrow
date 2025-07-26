@@ -1,6 +1,8 @@
+from constants import BLACK
 from random import randint
 import pygame
 from constants import (
+    ORIGIN,
     SKY_BLUE,
     DARK_CYAN,
     YELLOW,
@@ -29,11 +31,20 @@ def main():
     score = 0
 
     # Textures
-    bow_texture = pygame.image.load("assets/bow.png").convert_alpha()
-    bow_texture = pygame.transform.scale(bow_texture, (128, 128)).convert_alpha()
-    arrow_texture = pygame.image.load("assets/arrow.png").convert_alpha()
+    atlas = pygame.image.load("assets/atlas.png").convert_alpha()
+    bow_texture = pygame.Surface((32, 32))
+    bow_texture.blit(atlas, ORIGIN, (0, 0, 32, 32))
+    bow_texture.set_colorkey(BLACK)
+    bow_texture = pygame.transform.scale(bow_texture, (128, 128))
+
+    arrow_texture = pygame.Surface((32, 32))
+    arrow_texture.blit(atlas, ORIGIN, (0, 64, 32, 32))
+    arrow_texture.set_colorkey(BLACK)
     arrow_texture = pygame.transform.scale(arrow_texture, (64, 128))
-    apple_texture = pygame.image.load("assets/apple.png").convert_alpha()
+
+    apple_texture = pygame.Surface((32, 32))
+    apple_texture.blit(atlas, ORIGIN, (0, 96, 32, 32))
+    apple_texture.set_colorkey(BLACK)
     apple_textures = [
         pygame.transform.scale(apple_texture, (64, 64)).convert_alpha(),
         pygame.transform.scale(apple_texture, (128, 128)).convert_alpha(),

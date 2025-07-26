@@ -2,6 +2,7 @@ import pygame
 from random import randint
 HURT_ANIM_TIME_MS = 1000
 HURT_FLASH_INTERVAL_MS = 100
+DEATH_ANIM_TIME_MS = 1000
 
 
 class Apple(pygame.sprite.Sprite):
@@ -10,6 +11,7 @@ class Apple(pygame.sprite.Sprite):
         group,
         pos,
         normal_img,
+        die_img,
         health=3,
         speed=900,
         bonus=1
@@ -19,6 +21,7 @@ class Apple(pygame.sprite.Sprite):
         # save base img for transformations
         self.original_img = normal_img
         self.normal_img = normal_img
+        self.die_img = die_img
         self.image = self.normal_img
 
         self.rect = self.image.get_rect(topleft=pos)
@@ -33,6 +36,10 @@ class Apple(pygame.sprite.Sprite):
         self.last_flash_tm = 0
         self.flashing = False
 
+        # Death animation control
+        self.dying = False
+        self.dying_start_tm = 0
+
         # Rotation
         self.angle = 0
 
@@ -41,7 +48,10 @@ class Apple(pygame.sprite.Sprite):
         screen = args[1]
 
         current_time = pygame.time.get_ticks()
-        if (self.flashing and current_time - self.hurt_start_tm
+        if self.dying:
+            if current_time - self.dying_start_tm >= DEATH_ANIM_TIME_MS:
+                self.kill()
+        elif (self.flashing and current_time - self.hurt_start_tm
                 < HURT_ANIM_TIME_MS):
             if current_time - self.last_flash_tm >= HURT_FLASH_INTERVAL_MS:
                 self.last_flash_tm = current_time
@@ -55,15 +65,21 @@ class Apple(pygame.sprite.Sprite):
             self.rect.y = randint(0, 400)
 
         # Rotation
-        self.angle += -180 * delta_time
-        self.image = pygame.transform.rotate(self.original_img, self.angle)
-        self.rect = self.image.get_rect(center=self.rect.center)
+        if not self.dying:
+            self.angle += -180 * delta_time
+            self.image = pygame.transform.rotate(self.original_img, self.angle)
+            self.rect = self.image.get_rect(center=self.rect.center)
 
     def take_damage(self):
         self.health -= 1
 
-        if self.health <= 0:
-            self.kill()
+        if self.dying:
+            return 0
+        elif self.health <= 0:
+            self.image = self.die_img
+            self.dying_start_tm = pygame.time.get_ticks()
+            self.dying = True
+            self.speed = 0
             return self.bonus
         else:
             self.flashing = True

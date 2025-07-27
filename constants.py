@@ -1,5 +1,9 @@
 # Colors
 ORIGIN = (0, 0)
+
+FRAME_WIDTH = 32
+FRAME_HEIGHT = 32
+
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)

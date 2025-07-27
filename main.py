@@ -38,20 +38,15 @@ def main():
     bow_texture = pygame.transform.scale(bow_texture, (128, 128))
 
     arrow_texture = pygame.Surface((32, 32))
-    arrow_texture.blit(atlas, ORIGIN, (0, 64, 32, 32))
+    arrow_texture.blit(atlas, ORIGIN, (64, 32, 32, 32))
     arrow_texture.set_colorkey(BLACK)
     arrow_texture = pygame.transform.scale(arrow_texture, (64, 128))
 
-    apple_texture = pygame.Surface((32, 32))
-    apple_texture.blit(atlas, ORIGIN, (0, 96, 32, 32))
-    apple_texture.set_colorkey(BLACK)
-    apple_textures = [
-        pygame.transform.scale(apple_texture, (64, 64)).convert_alpha(),
-        pygame.transform.scale(apple_texture, (128, 128)).convert_alpha(),
-    ]
+    apple_sheet = pygame.Surface((128, 64))
+    apple_sheet.blit(atlas, ORIGIN, (0, 64, 128, 64))
 
     apple_die_tx = pygame.Surface((32, 32))
-    apple_die_tx.blit(atlas, ORIGIN, (32, 96, 32, 32))
+    apple_die_tx.blit(atlas, ORIGIN, (96, 32, 32, 32))
     apple_die_tx.set_colorkey(BLACK)
 
     apple_die_textures = [
@@ -71,7 +66,7 @@ def main():
 
     # Initialize Enemies
     apple_spawn_position = (screen.get_rect().left - 128, 200)
-    Apple(enemy_group, apple_spawn_position, apple_textures[0], apple_die_textures[0])
+    Apple(enemy_group, apple_spawn_position, apple_sheet, apple_die_textures[0], (64, 64))
 
     # Game Loop
     while running:
@@ -94,7 +89,8 @@ def main():
             hp = 6 if idx == 1 else 3
             speed = 600 if idx == 1 else 900
             bonus = 3 if idx == 1 else 1
-            Apple(enemy_group, (screen.get_rect().left - 128, randint(0, 400)), apple_textures[idx], apple_die_textures[idx], hp, speed, bonus)
+            size = (128, 128) if idx == 1 else (64, 64)
+            Apple(enemy_group, (screen.get_rect().left - 128, randint(0, 400)), apple_sheet, apple_die_textures[idx], size, hp, speed, bonus)
             last_spawn_update = current_time
 
         player_group.update(delta_time)

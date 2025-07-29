@@ -32,6 +32,8 @@ def main():
 
     # Textures
     atlas = pygame.image.load("assets/atlas.png").convert_alpha()
+    fruit_atlas = pygame.image.load("assets/garrison-fruit-atlas.png").convert_alpha()
+
     bow_texture = pygame.Surface((32, 32))
     bow_texture.blit(atlas, ORIGIN, (0, 0, 32, 32))
     bow_texture.set_colorkey(BLACK)
@@ -42,6 +44,7 @@ def main():
     arrow_texture.set_colorkey(BLACK)
     arrow_texture = pygame.transform.scale(arrow_texture, (64, 128))
 
+    # Setup Apple
     apple_sheet = pygame.Surface((128, 64))
     apple_sheet.blit(atlas, ORIGIN, (0, 64, 128, 64))
 
@@ -53,6 +56,22 @@ def main():
         pygame.transform.scale(apple_die_tx, (64, 64)).convert_alpha(),
         pygame.transform.scale(apple_die_tx, (128, 128)).convert_alpha(),
     ]
+
+    # Setup Orange
+    orange_sheet = pygame.Surface((128, 64))
+    orange_sheet.blit(fruit_atlas, ORIGIN, (0, 64, 128, 64))
+
+    orange_die_tx = pygame.Surface((32, 32))
+    orange_die_tx.blit(fruit_atlas, ORIGIN, (0, 64, 32, 32))
+    orange_die_tx.set_colorkey(BLACK)
+
+    # hp: int, speed: int, bonus: int, size: Coordinate
+    foes_stats = [
+        (3, 900, 1, (64, 64), apple_sheet, apple_die_textures[0]),  # apple
+        (6, 600, 3, (128, 128), apple_sheet, apple_die_textures[1]),  # big_apple
+        (10, 500, 5, (64, 64), orange_sheet, orange_die_tx),  # orange
+    ]
+
     # SpriteGroups
     player_group = pygame.sprite.Group()
     enemy_group = pygame.sprite.Group()
@@ -85,12 +104,9 @@ def main():
         spawn_delta_time = current_time - last_spawn_update
         if (len(enemy_group) < MAX_NUM_FOES and
                 spawn_delta_time > FOES_SPAWN_COOLDOWN_MS):
-            idx = randint(0, 1)
-            hp = 6 if idx == 1 else 3
-            speed = 600 if idx == 1 else 900
-            bonus = 3 if idx == 1 else 1
-            size = (128, 128) if idx == 1 else (64, 64)
-            Fruit(enemy_group, (screen.get_rect().left - 128, randint(0, 400)), apple_sheet, apple_die_textures[idx], size, hp, speed, bonus)
+            idx = randint(0, 2)
+            (hp, speed, bonus, size, spritesheet, die_tx) = foes_stats[idx]
+            Fruit(enemy_group, (screen.get_rect().left - 128, randint(0, 400)), spritesheet, die_tx, size, hp, speed, bonus)
             last_spawn_update = current_time
 
         player_group.update(delta_time)

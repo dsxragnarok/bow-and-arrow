@@ -65,11 +65,20 @@ def main():
     orange_die_tx.blit(fruit_atlas, ORIGIN, (0, 64, 32, 32))
     orange_die_tx.set_colorkey(BLACK)
 
+    # Setup Watermelon
+    watermelon_sheet = pygame.Surface((128, 64))
+    watermelon_sheet.blit(fruit_atlas, ORIGIN, (0, 0, 128, 64))
+
+    watermelon_die_tx = pygame.Surface((32, 32))
+    watermelon_die_tx.blit(fruit_atlas, ORIGIN, (0, 0, 32, 32))
+    watermelon_die_tx.set_colorkey(BLACK)
+
     # hp: int, speed: int, bonus: int, size: Coordinate
     foes_stats = [
         (3, 900, 1, (64, 64), apple_sheet, apple_die_textures[0]),  # apple
         (6, 600, 3, (128, 128), apple_sheet, apple_die_textures[1]),  # big_apple
         (10, 500, 5, (64, 64), orange_sheet, orange_die_tx),  # orange
+        (25, 200, 20, (96, 96), watermelon_sheet, watermelon_die_tx),  # watermelon
     ]
 
     # SpriteGroups
@@ -104,7 +113,7 @@ def main():
         spawn_delta_time = current_time - last_spawn_update
         if (len(enemy_group) < MAX_NUM_FOES and
                 spawn_delta_time > FOES_SPAWN_COOLDOWN_MS):
-            idx = randint(0, 2)
+            idx = randint(0, 3)
             (hp, speed, bonus, size, spritesheet, die_tx) = foes_stats[idx]
             Fruit(enemy_group, (screen.get_rect().left - 128, randint(0, 400)), spritesheet, die_tx, size, hp, speed, bonus)
             last_spawn_update = current_time

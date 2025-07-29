@@ -3,6 +3,8 @@ import math
 from random import randint
 from constants import ORIGIN, BLACK, FRAME_WIDTH, FRAME_HEIGHT
 from utils import red_flash_image
+
+
 HURT_ANIM_TIME_MS = 1000
 HURT_FLASH_INTERVAL_MS = 100
 DEATH_ANIM_TIME_MS = 1000
@@ -10,7 +12,7 @@ ANIM_DURATION_MS = 50
 ANIM_FRAMES = 8
 
 
-class Apple(pygame.sprite.Sprite):
+class Fruit(pygame.sprite.Sprite):
     def __init__(
         self,
         group,
@@ -84,7 +86,7 @@ class Apple(pygame.sprite.Sprite):
                 self.cur_frame_idx = (self.cur_frame_idx + 1) % ANIM_FRAMES
                 self.image = self.get_frame(self.cur_frame_idx, self.size)
                 self.last_anim_update_tm = current_time
-    
+
         self.rect.x = self.rect.x + self.speed * delta_time
         if self.rect.x >= screen.get_rect().right + 128:
             self.rect.x = screen.get_rect().left - 128

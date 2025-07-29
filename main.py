@@ -10,7 +10,7 @@ from constants import (
     MAX_NUM_FOES,
     FOES_SPAWN_COOLDOWN_MS
 )
-from apple import Apple
+from fruit import Fruit
 from bow import Bow
 from arrow import Arrow
 from utils import red_flash_image
@@ -66,7 +66,7 @@ def main():
 
     # Initialize Enemies
     apple_spawn_position = (screen.get_rect().left - 128, 200)
-    Apple(enemy_group, apple_spawn_position, apple_sheet, apple_die_textures[0], (64, 64))
+    Fruit(enemy_group, apple_spawn_position, apple_sheet, apple_die_textures[0], (64, 64))
 
     # Game Loop
     while running:
@@ -90,7 +90,7 @@ def main():
             speed = 600 if idx == 1 else 900
             bonus = 3 if idx == 1 else 1
             size = (128, 128) if idx == 1 else (64, 64)
-            Apple(enemy_group, (screen.get_rect().left - 128, randint(0, 400)), apple_sheet, apple_die_textures[idx], size, hp, speed, bonus)
+            Fruit(enemy_group, (screen.get_rect().left - 128, randint(0, 400)), apple_sheet, apple_die_textures[idx], size, hp, speed, bonus)
             last_spawn_update = current_time
 
         player_group.update(delta_time)

@@ -78,6 +78,7 @@ def main():
         (3, 900, 1, (64, 64), apple_sheet, apple_die_textures[0]),  # apple
         (6, 600, 3, (128, 128), apple_sheet, apple_die_textures[1]),  # big_apple
         (10, 500, 5, (64, 64), orange_sheet, orange_die_tx),  # orange
+        (15, 300, 10, (128, 128), orange_sheet, orange_die_tx),  # big_orange
         (25, 200, 20, (96, 96), watermelon_sheet, watermelon_die_tx),  # watermelon
     ]
 
@@ -113,7 +114,7 @@ def main():
         spawn_delta_time = current_time - last_spawn_update
         if (len(enemy_group) < MAX_NUM_FOES and
                 spawn_delta_time > FOES_SPAWN_COOLDOWN_MS):
-            idx = randint(0, 3)
+            idx = randint(0, 4)
             (hp, speed, bonus, size, spritesheet, die_tx) = foes_stats[idx]
             Fruit(enemy_group, (screen.get_rect().left - 128, randint(0, 400)), spritesheet, die_tx, size, hp, speed, bonus)
             last_spawn_update = current_time
